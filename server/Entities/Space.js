@@ -19,8 +19,38 @@ class Space extends Schema {
         this.players = new MapSchema();
         this.bullets = new MapSchema();
 
+        this.sprites = {}
+
         this.loop = GameLoop({
             update: () => {
+                for (let id in this.sprites) {
+                    const sprite = this.sprites[id]
+                    sprite.update();
+                    // sprite is beyond the left edge
+                    if (sprite.x < 0) {
+                        sprite.x = 600;
+                    }
+                    // sprite is beyond the right edge
+                    else if (sprite.x > 600) {
+                        sprite.x = 0;
+                    }
+                    // sprite is beyond the top edge
+                    if (sprite.y < 0) {
+                        sprite.y = 600;
+                    }
+                    // sprite is beyond the bottom edge
+                    else if (sprite.y > 600) {
+                        sprite.y = 0;
+                    }
+
+                    if (sprite.type === 'ship') {
+                        if (this.players[id]) {
+                            this.players[id].rotation = sprite.rotation;
+                            this.players[id].x = sprite.x;
+                            this.players[id].y = sprite.y;
+                        }
+                    }
+                }
                 for (let id in this.asteroids) {
                     const asteroid = this.asteroids[id];
                     const sprite = asteroid.sprite;
@@ -52,7 +82,7 @@ class Space extends Schema {
                     }
                 }
 
-                for (let id in this.players) {
+                /*for (let id in this.players) {
                     const asteroid = this.players[id];
                     const sprite = asteroid.sprite;
                     sprite.update();
@@ -81,7 +111,7 @@ class Space extends Schema {
                     if (!sprite.isAlive()) {
                         delete this.players[id];
                     }
-                }
+                }*/
 
                 for (let id in this.bullets) {
                     const bullet = this.bullets[id];
@@ -140,6 +170,7 @@ class Space extends Schema {
     addPlayer(client) {
         const player = new Player(client);
         this.players[client.id] = player;
+        this.sprites[client.id] = player.createSprite();
     }
 
     removePlayer(client) {
@@ -147,15 +178,15 @@ class Space extends Schema {
     }
 
     getPlayer(id) {
-        return this.players[id];
+        return this.sprites[id];
     }
 
     setPlayer(id, player) {
-        this.players[id] = player;
+        this.sprites[id] = player;
     }
 
     playerFire(client, player, cos, sin) {
-        const bullet = new Bullet(nanoid(8),client, player);
+        const bullet = new Bullet(nanoid(8), client, player);
         this.bullets[bullet.id] = bullet;
     }
 
@@ -168,10 +199,10 @@ class Space extends Schema {
             }
         });
 
-        for (var i = 0; i < 2; i++) {
-            const asteroid = new Asteroid(nanoid(8));
-            this.asteroids[asteroid.id] = asteroid;
-        }
+        /*  for (var i = 0; i < 2; i++) {
+              const asteroid = new Asteroid(nanoid(8));
+              this.asteroids[asteroid.id] = asteroid;
+          }*/
         this.loop.start();
     }
 }

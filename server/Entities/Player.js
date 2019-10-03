@@ -11,8 +11,15 @@ class Player extends Schema {
     constructor(client) {
         super();
         this.id = client.id;
-        this.type = "ship";
-        this.sprite = Sprite({
+        this.type = 'ship';
+        this.x = 300;
+        this.y = 300;
+        this.dt = 0;
+        this.rotation = 0;
+    }
+
+    createSprite() {
+        return Sprite({
             type: 'ship',
             x: 300,
             y: 300,

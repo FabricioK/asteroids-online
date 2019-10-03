@@ -1,6 +1,6 @@
 import './index.css'
 import { init, initKeys, on, emit, GameLoop, Sprite, keyPressed } from 'kontra';
-import { mappedAsteroids, mappedPlayers, mappedBullets } from './mappers';
+import { mappedAsteroids, mappedPlayers, mappedBullets, players } from './mappers';
 import { JoinOrCreate, sendMessage } from './colyseus/actions';
 
 function component() {
@@ -22,7 +22,7 @@ JoinOrCreate("room").then(room => {
     room.state.players.onAdd = mappedPlayers;
     room.state.asteroids.onAdd = mappedAsteroids;
     room.state.bullets.onAdd = mappedBullets;
-    
+
     on('click', (type) => {
         sendMessage(room, type);
     });
@@ -51,13 +51,13 @@ JoinOrCreate("room").then(room => {
                 emit('click', 'reset');
         },
         render: function () { // render the game state
-            for (let id in room.state.players)
-                room.state.players[id].sprite.render();
-            for (let id in room.state.asteroids)
-                room.state.asteroids[id].sprite.render();
-            for (let id in room.state.bullets)
-                room.state.bullets[id].sprite.render();
-
+            for (let id in players)
+                players[id].render();
+            /* for (let id in room.state.asteroids)
+                 room.state.asteroids[id].sprite.render();
+             for (let id in room.state.bullets)
+                 room.state.bullets[id].sprite.render();
+ */
         }
     });
     loop.start();    // start the game

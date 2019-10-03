@@ -17,9 +17,8 @@ exports.SpaceRoom = class extends colyseus.Room {
   }
 
   onMessage(client, message) {
-    const player = this.state.getPlayer(client.id);
-    if (player) {
-      const sprite = player.sprite;
+    const sprite = this.state.getPlayer(client.id);
+    if (sprite) {
       if (message === 'left') {
         sprite.rotation += -4
       }
@@ -38,9 +37,7 @@ exports.SpaceRoom = class extends colyseus.Room {
         sprite.dt = 0;
         this.state.playerFire(client.id, sprite);
       }
-
-      player.sprite = sprite;
-      this.state.setPlayer(client.id, player);
+      this.state.setPlayer(client.id, sprite);
     } else {
       if (message === 'reset') {
         this.state.addPlayer(client);

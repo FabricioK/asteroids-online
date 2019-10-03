@@ -41,8 +41,13 @@ export const mappedBullets = (bullet, key) => {
 
 export const mappedPlayers = (player, key) => {
     // add your player entity to the game world!
-    player.sprite = Sprite({
-        ...player,
+    players[player.id] = Sprite({
+        type: 'ship',
+        x: player.x,
+        y: player.y,
+        width: player.width,  // we'll use this later for collision detection
+        dt: player.dt,
+        rotation: player.rotation,
         render() {
             this.context.save();
             this.context.strokeStyle = 'white';
@@ -62,9 +67,11 @@ export const mappedPlayers = (player, key) => {
     })
     // If you want to track changes on a child object inside a map, this is a common pattern:
     player.onChange = function (changes) {
-        changes.forEach(change => {
-            player.sprite[change.field] = change.value;
+        changes.forEach(change => {           
+            players[player.id][change.field] = change.value;
         })
     };
 
 };
+
+export let players = {};
