@@ -5,11 +5,11 @@
   "author": "Fabricio dos Santos Antunes <fabriciodossa@hotmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "10.16.0"
+    "node": "12.5.0"
   },
   "scripts": {
     "build": "webpack",
-    "debug": "webpack --watch",
+    "debug": "webpack --watch --mode=development",
     "start": "node -r esm index.js"
   },
   "devDependencies": {

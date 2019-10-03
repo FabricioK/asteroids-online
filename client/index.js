@@ -12,54 +12,53 @@ function component() {
 
 document.body.appendChild(component());
 
-let sprites = [];
 let up_pressed = false;
-let sessionId = '';
-
-on('state', (state) => {
-    sprites = mappedAsteroids(state.asteroids);
-    sprites = sprites.concat(mappedPlayers(sessionId, state.players));
-    sprites = sprites.concat(mappedBullets(sessionId, state.bullets));
-})
 
 init()
 initKeys();
 
 JoinOrCreate("room").then(room => {
-    room.onStateChange((state) => {
-        emit('state', state)
-    });
-    sessionId = room.sessionId
+
+    room.state.players.onAdd = mappedPlayers;
+    room.state.asteroids.onAdd = mappedAsteroids;
+    room.state.bullets.onAdd = mappedBullets;
+    
     on('click', (type) => {
         sendMessage(room, type);
     });
+
+    let loop = GameLoop({
+        update: function () {
+            if (keyPressed('left')) {
+                emit('click', 'left');
+            }
+            else if (keyPressed('right')) {
+                emit('click', 'right');
+            }
+
+            if (keyPressed('up') && !up_pressed) {
+                up_pressed = true;
+                emit('click', 'up_pressed')
+            } else if (!keyPressed('up') && up_pressed) {
+                up_pressed = false;
+                emit('click', 'up_released')
+            }
+
+            if (keyPressed('space'))
+                emit('click', 'fire');
+
+            if (keyPressed('r'))
+                emit('click', 'reset');
+        },
+        render: function () { // render the game state
+            for (let id in room.state.players)
+                room.state.players[id].sprite.render();
+            for (let id in room.state.asteroids)
+                room.state.asteroids[id].sprite.render();
+            for (let id in room.state.bullets)
+                room.state.bullets[id].sprite.render();
+
+        }
+    });
+    loop.start();    // start the game
 });
-
-let loop = GameLoop({
-    update: function () {
-        if (keyPressed('left')) {
-            emit('click', 'left');
-        }
-        else if (keyPressed('right')) {
-            emit('click', 'right');
-        }
-
-        if (keyPressed('up') && !up_pressed) {
-            up_pressed = true;
-            emit('click', 'up_pressed')
-        } else if (!keyPressed('up') && up_pressed) {
-            up_pressed = false;
-            emit('click', 'up_released')
-        }
-
-        if (keyPressed('space'))
-            emit('click', 'fire');
-
-        if (keyPressed('r'))
-            emit('click', 'reset');
-    },
-    render: function () { // render the game state
-        sprites.map(sprite => sprite.render());
-    }
-});
-loop.start();    // start the game
