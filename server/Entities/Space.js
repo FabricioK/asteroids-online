@@ -143,10 +143,11 @@ class Space extends Schema {
             }
         });
 
-        /*  for (var i = 0; i < 2; i++) {
+          for (var i = 0; i < 10; i++) {
               const asteroid = new Asteroid(nanoid(8));
               this.asteroids[asteroid.id] = asteroid;
-          }*/
+              this.sprites[asteroid.id] = asteroid.createSprite();
+          }
         this.loop.start();
     }
 }

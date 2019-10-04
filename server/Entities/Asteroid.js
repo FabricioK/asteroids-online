@@ -9,7 +9,14 @@ class Asteroid extends Schema {
         this.id = id;
         this.type = "asteroid";
         this.x = 0;
-        this.sprite = Sprite({
+        this.y = 0;
+        this.dx = 0;
+        this.dy = 0;
+        this.radius = 30;
+    }
+
+    createSprite() {
+        return Sprite({
             type: 'asteroid',
             x: 100,
             y: 100,
