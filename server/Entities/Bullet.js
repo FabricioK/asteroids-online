@@ -7,16 +7,21 @@ const degreesToRadians = degrees => {
 }
 
 class Bullet extends Schema {
-    constructor(id,playerid, player) {
+    constructor(id, playerid, player) {
         super();
         this.id = id;
         this.type = "bullet";
         this.playerid = playerid;
-        
         const cos = Math.cos(degreesToRadians(player.rotation));
         const sin = Math.sin(degreesToRadians(player.rotation));
+        this.x = player.x + cos * 12;
+        this.y = player.y + sin * 12;
+    }
 
-        this.sprite = Sprite({
+    createSprite(id, playerid, player) {
+        const cos = Math.cos(degreesToRadians(player.rotation));
+        const sin = Math.sin(degreesToRadians(player.rotation));
+        return Sprite({
             type: 'bullet',
             // start the bullet on the ship at the end of the triangle
             x: player.x + cos * 12,
@@ -28,7 +33,7 @@ class Bullet extends Schema {
             ttl: 50,
             // bullets are small
             width: 2,
-            height: 2,            
+            height: 2,
             color: 'white'
         })
     }

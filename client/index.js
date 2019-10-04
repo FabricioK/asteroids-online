@@ -1,6 +1,6 @@
 import './index.css'
 import { init, initKeys, on, emit, GameLoop, Sprite, keyPressed } from 'kontra';
-import { mappedAsteroids, mappedPlayers, mappedBullets, players } from './mappers';
+import { onAddAsteroids, onAddPlayers, onAddBullets, players, asteroids, bullets, onRemoveBullets, onRemovePlayers, onRemoveAsteroids } from './mappers';
 import { JoinOrCreate, sendMessage } from './colyseus/actions';
 
 function component() {
@@ -19,45 +19,45 @@ initKeys();
 
 JoinOrCreate("room").then(room => {
 
-    room.state.players.onAdd = mappedPlayers;
-    room.state.asteroids.onAdd = mappedAsteroids;
-    room.state.bullets.onAdd = mappedBullets;
+    room.state.players.onAdd = onAddPlayers;
+    room.state.players.onRemove = onRemovePlayers;
 
-    on('click', (type) => {
-        sendMessage(room, type);
-    });
+    room.state.asteroids.onRemove = onRemoveAsteroids;
+    room.state.asteroids.onAdd = onAddAsteroids;
+
+    room.state.bullets.onAdd = onAddBullets;
+    room.state.bullets.onRemove = onRemoveBullets;
 
     let loop = GameLoop({
         update: function () {
             if (keyPressed('left')) {
-                emit('click', 'left');
+                sendMessage(room, 'left');
             }
             else if (keyPressed('right')) {
-                emit('click', 'right');
+                sendMessage(room, 'right');
             }
 
             if (keyPressed('up') && !up_pressed) {
                 up_pressed = true;
-                emit('click', 'up_pressed')
+                sendMessage(room, 'up_pressed');
             } else if (!keyPressed('up') && up_pressed) {
                 up_pressed = false;
-                emit('click', 'up_released')
+                sendMessage(room, 'up_released');
             }
 
             if (keyPressed('space'))
-                emit('click', 'fire');
+                sendMessage(room, 'fire');
 
             if (keyPressed('r'))
-                emit('click', 'reset');
+                sendMessage(room, 'reset');
         },
         render: function () { // render the game state
             for (let id in players)
-                players[id].render();
-            /* for (let id in room.state.asteroids)
-                 room.state.asteroids[id].sprite.render();
-             for (let id in room.state.bullets)
-                 room.state.bullets[id].sprite.render();
- */
+                players[id].render(room.sessionId);
+            for (let id in asteroids)
+                asteroids[id].render();
+            for (let id in bullets)
+                bullets[id].render(room.sessionId);
         }
     });
     loop.start();    // start the game

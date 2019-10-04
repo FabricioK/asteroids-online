@@ -49,83 +49,26 @@ class Space extends Schema {
                             this.players[id].x = sprite.x;
                             this.players[id].y = sprite.y;
                         }
-                    }
-                }
-                for (let id in this.asteroids) {
-                    const asteroid = this.asteroids[id];
-                    const sprite = asteroid.sprite;
-                    sprite.update();
-                    // sprite is beyond the left edge
-                    if (sprite.x < -50) {
-                        sprite.x = 650;
-                    }
-                    // sprite is beyond the right edge
-                    else if (sprite.x > 650) {
-                        sprite.x = -50;
-                    }
-                    // sprite is beyond the top edge
-                    if (sprite.y < -50) {
-                        sprite.y = 650;
-                    }
-                    // sprite is beyond the bottom edge
-                    else if (sprite.y > 650) {
-                        sprite.y = -50;
-
-                    }
-                    this.asteroids[id].sprite = sprite;
-                    this.asteroids[id].radius = sprite.radius;
-                    this.asteroids[id].x = sprite.x;
-                    this.asteroids[id].y = sprite.y;
-
-                    if (!sprite.isAlive()) {
-                        delete this.asteroids[id];
+                    } else if (sprite.type === 'asteroid') {
+                        if (this.asteroids[id]) {
+                            this.asteroids[id].radius = sprite.radius;
+                            this.asteroids[id].x = sprite.x;
+                            this.asteroids[id].y = sprite.y;
+                        }
+                    } else if (sprite.type === 'bullet') {
+                        if (this.bullets[id]) {
+                            this.bullets[id].x = sprite.x;
+                            this.bullets[id].y = sprite.y;
+                            this.bullets[id].width = sprite.width;
+                            this.bullets[id].height = sprite.height;
+                            if (!sprite.isAlive()) {
+                                delete this.sprites[id];
+                                delete this.bullets[id];
+                            }
+                        }
                     }
                 }
 
-                /*for (let id in this.players) {
-                    const asteroid = this.players[id];
-                    const sprite = asteroid.sprite;
-                    sprite.update();
-                    // sprite is beyond the left edge
-                    if (sprite.x < 0) {
-                        sprite.x = 600;
-                    }
-                    // sprite is beyond the right edge
-                    else if (sprite.x > 600) {
-                        sprite.x = 0;
-                    }
-                    // sprite is beyond the top edge
-                    if (sprite.y < 0) {
-                        sprite.y = 600;
-                    }
-                    // sprite is beyond the bottom edge
-                    else if (sprite.y > 600) {
-                        sprite.y = 0;
-
-                    }
-                    this.players[id].sprite = sprite;
-                    this.players[id].rotation = sprite.rotation;
-                    this.players[id].x = sprite.x;
-                    this.players[id].y = sprite.y;
-
-                    if (!sprite.isAlive()) {
-                        delete this.players[id];
-                    }
-                }*/
-
-                for (let id in this.bullets) {
-                    const bullet = this.bullets[id];
-                    const sprite = bullet.sprite;
-                    sprite.update();
-                    this.bullets[id].sprite = sprite;
-                    this.bullets[id].x = sprite.x;
-                    this.bullets[id].y = sprite.y;
-                    this.bullets[id].width = sprite.width;
-                    this.bullets[id].height = sprite.height;
-                    if (!sprite.isAlive()) {
-                        delete this.bullets[id];
-                    }
-                }
                 for (let a_id in this.asteroids) {
                     const asteroid = this.asteroids[a_id];
                     const a_sprite = asteroid.sprite;
@@ -188,6 +131,7 @@ class Space extends Schema {
     playerFire(client, player, cos, sin) {
         const bullet = new Bullet(nanoid(8), client, player);
         this.bullets[bullet.id] = bullet;
+        this.sprites[bullet.id] = bullet.createSprite(bullet.id, client, player);
     }
 
     initialize() {
