@@ -67,42 +67,7 @@ class Space extends Schema {
                             }
                         }
                     }
-                }
-
-                for (let a_id in this.asteroids) {
-                    const asteroid = this.asteroids[a_id];
-                    const a_sprite = asteroid.sprite;
-                    //checking if a asteroid hitted a bullet
-                    for (let b_id in this.bullets) {
-                        const bullet = this.bullets[b_id];
-                        const b_sprite = bullet.sprite;
-                        // circle vs. circle collision detection
-                        let dx = a_sprite.x - b_sprite.x;
-                        let dy = a_sprite.y - b_sprite.y;
-                        if (Math.sqrt(dx * dx + dy * dy) < a_sprite.radius + b_sprite.width) {
-                            delete this.asteroids[a_id];
-                            delete this.bullets[b_id];
-                            break;
-                        }
-                    }
-                    // if the asteroid is destroid, don't check for players
-                    if (!this.asteroids[a_id])
-                        break;
-
-                    // checking if a asteroid hitted a player                    
-                    for (let p_id in this.players) {
-                        const player = this.players[p_id];
-                        const p_sprite = player.sprite;
-                        // circle vs. circle collision detection
-                        let dx = a_sprite.x - p_sprite.x;
-                        let dy = a_sprite.y - p_sprite.y;
-                        if (Math.sqrt(dx * dx + dy * dy) < a_sprite.radius + p_sprite.width) {
-                            delete this.asteroids[a_id];
-                            delete this.players[p_id];
-                            break;
-                        }
-                    }
-                }
+                }                
             },
             render: function () { // render the game state
 

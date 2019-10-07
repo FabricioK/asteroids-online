@@ -20,6 +20,7 @@ app.use(express.json());
 
 //Client side stuff
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static('assets'));
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {

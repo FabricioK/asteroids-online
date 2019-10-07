@@ -1,6 +1,7 @@
 import { load, TileEngine, imageAssets } from 'kontra';
-import tilesheet from '../../assets/imgs/mapPack_tilesheet.png';
-load(tilesheet)
+
+const foto = require('../../assets/imgs/foto.png');
+load(foto)
     .then(assets => {
         tileEngine = TileEngine({
             // tile size
@@ -14,7 +15,7 @@ load(tilesheet)
             // tileset object
             tilesets: [{
                 firstgid: 1,
-                image: imageAssets['/public/icons/mapPack_tilesheet']
+                image: imageAssets[foto]
             }],
 
             // layer object

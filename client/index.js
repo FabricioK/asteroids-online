@@ -3,7 +3,6 @@ import { init, initKeys, on, emit, GameLoop, Sprite, keyPressed } from 'kontra';
 import { onAddAsteroids, onAddPlayers, onAddBullets, players, asteroids, bullets, onRemoveBullets, onRemovePlayers, onRemoveAsteroids } from './mappers';
 import { JoinOrCreate, sendMessage } from './colyseus/actions';
 import { tileEngine } from './TileEngine';
-
 function component() {
     const element = document.createElement('canvas');
     element.width = 600;
