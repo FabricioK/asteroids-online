@@ -13,8 +13,8 @@
     "debug": "webpack --mode=development",
     "start": "node -r esm index.js",
     "heroku-postbuild": "webpack --config ./prod.config.js"
-  },
-  "devDependencies": {
+  }, 
+  "dependencies": {
     "@colyseus/loadtest": "^0.11.0",
     "browserify": "^14.4.0",
     "css-loader": "^3.2.0",
@@ -24,9 +24,7 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon-webpack-plugin": "^4.1.1",
-    "webpack-node-externals": "^1.7.2"
-  },
-  "dependencies": {
+    "webpack-node-externals": "^1.7.2",
     "@colyseus/monitor": "^0.11.0",
     "body-parser": "^1.19.0",
     "colyseus": "^0.11.14",
