@@ -1,8 +1,8 @@
 import './index.css'
-import { init, initKeys, on, emit, GameLoop, Sprite, keyPressed } from 'kontra';
+import { init, initKeys, GameLoop, keyPressed } from 'kontra';
 import { onAddAsteroids, onAddPlayers, onAddBullets, players, asteroids, bullets, onRemoveBullets, onRemovePlayers, onRemoveAsteroids } from './mappers';
 import { JoinOrCreate, sendMessage } from './colyseus/actions';
-import { tileEngine } from './TileEngine';
+
 function component() {
     const element = document.createElement('canvas');
     element.width = 600;
@@ -52,9 +52,6 @@ JoinOrCreate("room").then(room => {
                 sendMessage(room, 'reset');
         },
         render: function () { // render the game state
-
-            if (!tileEngine.notready)
-                tileEngine.render();
 
             for (let id in players)
                 players[id].render(room.sessionId);

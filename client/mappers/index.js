@@ -4,7 +4,6 @@ const degreesToRadians = degrees => {
     return degrees * Math.PI / 180;
 }
 
-
 export const onAddAsteroids = (asteroid, key) => {
     // add your player entity to the game world!
     asteroids[asteroid.id] = Sprite({

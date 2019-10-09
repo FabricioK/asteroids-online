@@ -14,6 +14,8 @@ class Player extends Schema {
         this.type = 'ship';
         this.x = 300;
         this.y = 300;
+        this.dx = 0;
+        this.dy = 0;
         this.dt = 0;
         this.rotation = 0;
     }
@@ -30,8 +32,7 @@ class Player extends Schema {
             update() {
                 const cos = Math.cos(degreesToRadians(this.rotation));
                 const sin = Math.sin(degreesToRadians(this.rotation));
-
-                this.advance();
+                
 
                 if (this.thrusterOn) {
                     this.ddx = cos * 0.05;
@@ -40,13 +41,15 @@ class Player extends Schema {
                 else {
                     this.ddx = this.ddy = 0;
                 }
+                
+                this.advance();
+                
                 // set a max speed
                 const magnitude = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
                 if (magnitude > 5) {
                     this.dx *= 0.95;
                     this.dy *= 0.95;
                 }
-
                 this.dt += 1 / 60;
             }
         });
