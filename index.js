@@ -9,7 +9,8 @@ const monitor = require("@colyseus/monitor").monitor;
 global.performance = require('perf_hooks').performance;
 global.requestAnimationFrame = setImmediate;
 global.document = {
-  getElementById : () => null
+  getElementById: () => null,
+  createElement: () => { return {getContext: () => null }}
 }
 
 const port = process.env.PORT || 2567;

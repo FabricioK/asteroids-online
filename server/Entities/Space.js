@@ -2,13 +2,14 @@ const schema = require('@colyseus/schema');
 const Schema = schema.Schema;
 const MapSchema = schema.MapSchema;
 
-import { GameLoop, init } from '../../node_modules/kontra/kontra.mjs';
+import { GameLoop, init, TileEngine } from '../../node_modules/kontra/kontra.mjs';
 
 let nanoid = require("nanoid");
 
-const Asteroid = require('../Entities/Asteroid');
-const Player = require('../Entities/Player');
-const Bullet = require('../Entities/Bullet');
+const Asteroid = require('./Asteroid');
+const Player = require('./Player');
+const Bullet = require('./Bullet');
+const Arena = require('./Arena');
 
 class Space extends Schema {
 
@@ -21,28 +22,30 @@ class Space extends Schema {
 
         this.sprites = {}
 
+        this.arena = new MapSchema();
+
+        this.tileEngine = TileEngine({
+            // tile size
+            tilewidth: 64,
+            tileheight: 64,
+
+            // map size in tiles
+            width: 64,
+            height: 64,
+            tilesets: [],
+            // layer object
+            layers: [{
+                name: 'ground',
+                visible: false,
+                data: []
+            }]
+        });
+
         this.loop = GameLoop({
             update: () => {
                 for (let id in this.sprites) {
                     const sprite = this.sprites[id]
                     sprite.update();
-                    // sprite is beyond the left edge
-                    if (sprite.x < 0) {
-                        sprite.x = 600;
-                    }
-                    // sprite is beyond the right edge
-                    else if (sprite.x > 600) {
-                        sprite.x = 0;
-                    }
-                    // sprite is beyond the top edge
-                    if (sprite.y < 0) {
-                        sprite.y = 600;
-                    }
-                    // sprite is beyond the bottom edge
-                    else if (sprite.y > 600) {
-                        sprite.y = 0;
-                    }
-
                     if (sprite.type === 'ship') {
                         if (this.players[id]) {
                             this.players[id].rotation = sprite.rotation;
@@ -50,6 +53,7 @@ class Space extends Schema {
                             this.players[id].y = sprite.y;
                         }
                     } else if (sprite.type === 'asteroid') {
+
                         if (this.asteroids[id]) {
                             this.asteroids[id].radius = sprite.radius;
                             this.asteroids[id].x = sprite.x;
@@ -67,7 +71,7 @@ class Space extends Schema {
                             }
                         }
                     }
-                }                
+                }
             },
             render: function () { // render the game state
 
@@ -100,6 +104,13 @@ class Space extends Schema {
     }
 
     initialize() {
+
+        this.arena[nanoid(8)] = new Arena();
+        for (let id in this.arena) {
+            this.arena[id].Generate();
+            //this.tileEngine.setLayer('ground', this.arena[id].collision);
+        }
+
         init({
             width: 600,
             height: 600,
@@ -108,11 +119,11 @@ class Space extends Schema {
             }
         });
 
-          for (var i = 0; i < 10; i++) {
-              const asteroid = new Asteroid(nanoid(8));
-              this.asteroids[asteroid.id] = asteroid;
-              this.sprites[asteroid.id] = asteroid.createSprite();
-          }
+        for (var i = 0; i < 10; i++) {
+            const asteroid = new Asteroid(nanoid(8));
+            this.asteroids[asteroid.id] = asteroid;
+            this.sprites[asteroid.id] = asteroid.createSprite();
+        }
         this.loop.start();
     }
 }
@@ -120,7 +131,8 @@ class Space extends Schema {
 schema.defineTypes(Space, {
     asteroids: { map: Asteroid },
     bullets: { map: Bullet },
-    players: { map: Player }
+    players: { map: Player },
+    arena: { map: Arena }
 });
 
 module.exports = Space;
