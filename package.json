@@ -36,7 +36,7 @@
     "kontra": "^6.6.0",
     "nodemon": "^1.19.3",
     "serve-index": "^1.8.0",
-    "superagent": "^3.8.1",
+    "superagent": "^5.0.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
