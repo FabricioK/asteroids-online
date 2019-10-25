@@ -15,34 +15,62 @@ exports.SpaceRoom = class extends colyseus.Room {
   onLeave(client, consented) {
     this.state.removePlayer(client);
   }
-
-  onMessage(client, message) {
+  onMessage(client, payload) {
+    const { type, buffer } = payload;
     const sprite = this.state.getPlayer(client.id);
     if (sprite) {
-      if (message === 'left') {
-        sprite.rotation += -4
+      switch (type) {
+        case 'keybinding':
+          this.handleKeys(buffer, sprite, client);
+          break;
+        case 'reset':
+          break;
+        default:
+          break;
       }
-      else if (message === 'right') {
-        sprite.rotation += 4
-      }
-
-      if (message === 'up_pressed') {
-        sprite.thrusterOn = true;
-      }
-      else if (message === 'up_released') {
-        sprite.thrusterOn = false;
-      }
-
-      if (message === 'fire' && sprite.dt > 0.25) {
-        sprite.dt = 0;
-        this.state.playerFire(client.id, sprite);
-      }
-      this.state.setPlayer(client.id, sprite);
     } else {
-      if (message === 'reset') {
+      if (type === 'reset') {
         this.state.addPlayer(client);
       }
     }
+  }
+
+  keyCheck(buffer, key, type = true) {
+    return buffer.hasOwnProperty(key.toLowerCase()) === type;
+  }
+
+  handleKeys(buffer, sprite, client) {
+    // dont move until attack is over     
+    if (this.keyCheck(buffer, 'a')) {
+      sprite.rotateLeft = true;
+    }
+
+    if (this.keyCheck(buffer, 'd')) {
+      sprite.rotateRight = true;
+    }
+
+    if (this.keyCheck(buffer, 'w')) {
+      sprite.thrusterOn = true;
+    }
+
+    if (this.keyCheck(buffer, 'w', false)) {
+      sprite.thrusterOn = false;
+    }
+
+    if (this.keyCheck(buffer, 'a', false)) {
+      sprite.rotateLeft = false;
+    }
+
+    if (this.keyCheck(buffer, 'd', false)) {
+      sprite.rotateRight = false;
+    }
+    
+    if (this.keyCheck(buffer, ' ') && sprite.dt > 0.25) {
+      sprite.dt = 0;
+      this.state.playerFire(client.id, sprite);
+    }
+
+    this.state.setPlayer(client.id, sprite);
   }
 
   onDispose() {

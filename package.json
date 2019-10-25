@@ -5,8 +5,8 @@
   "author": "Fabricio dos Santos Antunes <fabriciodossa@hotmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "12.11.1",
-    "yarn": "1.16.0"
+    "node": "^12.11.1",
+    "yarn": "^1.16.0"
   },
   "scripts": {
     "build": "webpack",
