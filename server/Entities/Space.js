@@ -89,6 +89,26 @@ class Space extends Schema {
                             this.asteroids[id].radius = sprite.radius;
                             this.asteroids[id].x = sprite.x;
                             this.asteroids[id].y = sprite.y;
+
+                            //Collision bettween sprites
+                            for (let _id in this.sprites) {
+                                const a_sprite = this.sprites[_id];
+                                if (_id == id || a_sprite.playerid == id)
+                                    continue;                             
+
+                                if (a_sprite.type === 'ship')
+                                    if (sprite.collidesWith(a_sprite)) {
+                                        sprite.ttl = 0;
+                                        a_sprite.ttl = 0;
+                                    }
+
+                                if (a_sprite.type === 'bullet')
+                                    if (a_sprite.collidesWith(sprite)) {
+                                        sprite.ttl = 0;
+                                        a_sprite.ttl = 0;
+                                    }
+                            }
+
                             if (!sprite.isAlive()) {
                                 delete this.sprites[id];
                                 delete this.asteroids[id];

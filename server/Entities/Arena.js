@@ -27,7 +27,6 @@ class Arena extends Schema {
         for (var x = 0; x < this.map_size; x++) {
             for (var y = 0; y < this.map_size; y++) {
                 this.data.push(this.map[x][y]);
-          //      this.collision.push(collision_array.includes(this.map[x][y]) ? 1 : 0);
             }
         }
     }

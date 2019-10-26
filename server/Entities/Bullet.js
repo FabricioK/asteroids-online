@@ -34,7 +34,30 @@ class Bullet extends Schema {
             // bullets are small
             width: 2,
             height: 2,
-            color: 'white'
+            color: 'white',
+            collidesWith: function (object) {
+                let dx = object.x - this.x;
+                let dy = object.y - this.y;
+
+                if (object.radius)
+                    return Math.sqrt(dx * dx + dy * dy) < object.radius + this.width;
+
+                // take into account sprite anchors
+                let x = this.x - this.width * this.anchor.x;
+                let y = this.y - this.height * this.anchor.y;
+
+                let objX = object.x;
+                let objY = object.y;
+                if (object.anchor) {
+                    objX -= object.width * object.anchor.x;
+                    objY -= object.height * object.anchor.y;
+                }
+
+                return x < objX + object.width &&
+                    x + this.width > objX &&
+                    y < objY + object.height &&
+                    y + this.height > objY;
+            },
         })
     }
 }
