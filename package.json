@@ -34,7 +34,7 @@
     "express-jwt": "^5.3.1",
     "file-loader": "^4.2.0",
     "kontra": "^6.6.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^2.0.0",
     "serve-index": "^1.8.0",
     "superagent": "^3.8.1",
     "url-loader": "^2.2.0",
