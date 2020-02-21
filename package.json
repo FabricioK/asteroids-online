@@ -25,7 +25,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon-webpack-plugin": "^4.1.1",
     "webpack-node-externals": "^1.7.2",
-    "@colyseus/monitor": "^0.11.0",
+    "@colyseus/monitor": "^0.12.0",
     "body-parser": "^1.19.0",
     "colyseus": "^0.11.14",
     "colyseus.js": "^0.11.2",

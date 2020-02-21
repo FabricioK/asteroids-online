@@ -15,12 +15,13 @@
     typescript "^3.2.4"
     ws "^6.1.4"
 
-"@colyseus/monitor@^0.11.0":
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/@colyseus/monitor/-/monitor-0.11.5.tgz#5b2c00e4b372f71de626d6c15c4a833fc0e6c030"
-  integrity sha512-b9H+Rqxp2YqogPoXC9xYKYeCqqRHX5QNs+BTaYVZqlqqycTJGeNZgy98NaksNWnK3ceAJBci8Vi3PpcvCPYdNw==
+"@colyseus/monitor@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@colyseus/monitor/-/monitor-0.12.0.tgz#edf6722bc44327e913e12146297cfed6cdde5158"
+  integrity sha512-MEyNZqu4c72Fx4+yWmlsKTLK1Fa8+Dhw+sYiHnuiO4PDwj+sDDRz3N35lyAyVO2aV1hlaiUVqupolO1v7YZ8rA==
   dependencies:
     express "^4.16.3"
+    node-os-utils "^1.2.0"
 
 "@colyseus/schema@^0.4.0":
   version "0.4.58"
@@ -3279,6 +3280,11 @@ node-libs-browser@^2.2.1:
     url "^0.11.0"
     util "^0.11.0"
     vm-browserify "^1.0.1"
+
+node-os-utils@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/node-os-utils/-/node-os-utils-1.2.2.tgz#57acb6a26a79314a0156804b3f347608db406571"
+  integrity sha512-QepEuY8kw+kRPdpciSSB2AFLM76RNRiSxtlXG5AisIQ8ow9tuSZ/QiS8cFro1iA843ZjSvaoM8DGa8R9loDlWA==
 
 node-pre-gyp@^0.12.0:
   version "0.12.0"
