@@ -31,7 +31,7 @@
     "colyseus.js": "^0.11.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "express-jwt": "^5.3.1",
+    "express-jwt": "^6.0.0",
     "file-loader": "^4.2.0",
     "kontra": "^6.6.0",
     "nodemon": "^1.19.3",
