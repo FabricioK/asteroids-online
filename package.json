@@ -15,7 +15,7 @@
     "heroku-postbuild": "webpack --config ./prod.config.js"
   }, 
   "dependencies": {
-    "@colyseus/loadtest": "^0.11.0",
+    "@colyseus/loadtest": "^0.14.0",
     "browserify": "^14.4.0",
     "css-loader": "^3.2.0",
     "dotenv-webpack": "^1.7.0",
