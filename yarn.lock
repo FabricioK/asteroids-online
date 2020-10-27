@@ -2,14 +2,19 @@
 # yarn lockfile v1
 
 
-"@colyseus/loadtest@^0.11.0":
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/@colyseus/loadtest/-/loadtest-0.11.2.tgz#9c124c05d081f20e05b238e0725855c81b24e753"
-  integrity sha512-/CtdOjcpud08l91ee2/FoxmJKuXDhLnZ6YvVR1Tub+dzF+oNfDze9XAMGkfR/01+Lz2VYqpqnFGxkHgh1GmoVw==
+"@colyseus/http@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@colyseus/http/-/http-2.0.0.tgz#620209a3dd06f9c455de12128d22ebdffda05592"
+  integrity sha512-GLg13402o160vBcjcO5uupVzf8FLAFtMQKvi7QdfxG2OvPFHx+s6wws5CAWOvcyqA97aR4Xzqxngp8AEX7ndNA==
+
+"@colyseus/loadtest@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@colyseus/loadtest/-/loadtest-0.14.0.tgz#8b65cb205a4df2853c5f2380f921a715dd0507a5"
+  integrity sha512-443x1zvqqau2w+ZWGuq/64vozkI6FiLviPBUIsJVWvtl8WubqpKaCvWtmAYMeN+BAtz79kf2fAmRXMTqs+5GUw==
   dependencies:
     "@types/node" "^10.12.18"
     blessed "^0.1.81"
-    colyseus.js "^0.11.0"
+    colyseus.js "^0.14.0"
     minimist "^1.2.0"
     ts-node "^7.0.1"
     typescript "^3.2.4"
@@ -26,6 +31,11 @@
   version "0.4.58"
   resolved "https://registry.yarnpkg.com/@colyseus/schema/-/schema-0.4.58.tgz#1eec7ad623b85514b9398acbfa0d3f326bc696ab"
   integrity sha512-YnY6/eV62Qu+VppfOsBmsA7Ze2pWdy88NRBsmaRgU3wLYBwTE+i1qFrly6NKUux6S028YgRiEf/H8/zFX1E2Uw==
+
+"@colyseus/schema@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@colyseus/schema/-/schema-1.0.1.tgz#cf554370597372366cbc06e4544e609e9e421052"
+  integrity sha512-P5+PZ9zBEe+Ykw5W8Eo01BeWLQOziaM4lRTpS40R6/o+zH4gmOPzMaWhQlVoVHw0GEAqOfwUtbk9u7qPFbwtyQ==
 
 "@gamestdio/clock@^1.1.9":
   version "1.1.9"
@@ -908,7 +918,7 @@ color-name@1.1.3:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
 
-colyseus.js@^0.11.0, colyseus.js@^0.11.2:
+colyseus.js@^0.11.2:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/colyseus.js/-/colyseus.js-0.11.2.tgz#20e50176e9889c2f51f2c3e3a1cfcf022ccf4bff"
   integrity sha512-JvTDlPI74NYXlTIEoHSOSSf9QuyI3yrPGTA5sSAxIk+R2YJBskGTp6+Rn/pttf2wO2KRJYPC9Vtqi7IbhkNTew==
@@ -919,6 +929,21 @@ colyseus.js@^0.11.0, colyseus.js@^0.11.2:
     "@gamestdio/websocket" "^0.3.2"
     fossil-delta "^1.0.0"
     httpie "^2.0.0-next.2"
+    notepack.io "^2.1.3"
+    strong-events "^1.0.5"
+
+colyseus.js@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/colyseus.js/-/colyseus.js-0.14.0.tgz#c74e978f073be60b94639b398919991e68a57aac"
+  integrity sha512-beBsTF1iHTwJIXD3SumaTIqhwPMpRr9MA5/qw/uQxAlXi3Fucopn4gJEuTIVHBONTErvVjslRJ0+aY0yQbuVnA==
+  dependencies:
+    "@colyseus/http" "^2.0.0"
+    "@colyseus/schema" "^1.0.0"
+    "@gamestdio/signals" "^1.0.0"
+    "@gamestdio/state-listener" "^3.1.0"
+    "@gamestdio/websocket" "^0.3.2"
+    fossil-delta "^1.0.0"
+    nanoevents "^5.1.5"
     notepack.io "^2.1.3"
     strong-events "^1.0.5"
 
@@ -3197,6 +3222,11 @@ nan@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
+
+nanoevents@^5.1.5:
+  version "5.1.10"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-5.1.10.tgz#9165199eed228c4787086dd1ea579b64257b8f8e"
+  integrity sha512-QOE78g63vQ7V1JzhOLP8UNlaLOF/llDtfUhCj9GlbhQQc0YdPi5GNJKZdeWE0fvDtGF39un6uSf7RObeBm0eAg==
 
 nanoid@^2.0.0:
   version "2.1.2"
